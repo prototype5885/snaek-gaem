@@ -116,7 +116,7 @@ def main():
         os.system('cls')  
         draw()
         logic()
-        txt,_ = timedInput('get input:', timeout = 0.25)
+        txt,_ = timedInput('get input:', timeout = 0.05)
         match txt:
             case 'w': something = "w"
             case 's': something = "s"
