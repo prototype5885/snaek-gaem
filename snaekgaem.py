@@ -4,9 +4,8 @@ import random
 import time
 #imports os to clear the terminal
 import os
-from turtle import backward, down, left, right
-#imports included keyboard module
-import keyboard
+
+from inputimeout import inputimeout, TimeoutOccurred
 
 #bool to stop if you die
 gameOver = bool(False)
@@ -22,6 +21,8 @@ fruitX = int
 fruitY = int
 #score
 score = int
+
+something = ""
 
 timer = int(0)
 
@@ -48,6 +49,7 @@ def setup():
     #score int
     global score
     score = 0
+
 
 #draw the graphics
 def draw():
@@ -85,63 +87,32 @@ def draw():
     global timer
     timer = timer + 1
     print(timer)
+    print(something)
         
 
-        
-def input():
-    global upwards
-    global downwards
-    global leftwards
-    global rightwards
-    
-    if keyboard.read_key() == "w":
-        # reset_direction_bools()
-        print("upwards")
-        quit()
-        upwards = True
-    if keyboard.read_key() == "s":
-        # reset_direction_bools()
-        print("downwards")
-        downwards = True
-    # if keyboard.read_key() == "left":
-    #     reset_direction_bools()
-    #     leftwards = True
-    # if keyboard.read_key() == "right":
-    #     reset_direction_bools()
-    #     rightwards = True
-
-def reset_direction_bools():
-    global upwards
-    global downwards
-    global leftwards
-    global rightwards
-    
-    upwards = False
-    downwards = False
-    leftwards = False
-    rightwards = False
 
 
 def logic():
     global x
     global y
-    if upwards is True: y = y - 1
-    if downwards is True: y = y + 1
-    if leftwards is True: x = x - 1
-    if rightwards is True: x = x + 1
+    if something == "w": y = y - 1
+    if something == "s": y = y + 1
+    if something == "a": x = x - 1
+    if something == "d": x = x + 1
 
 
 
 def main():
     setup()
+    global something
     while gameOver is False:
+        os.system('cls')  
         draw()
         logic()
-        time.sleep(0.5)
-        os.system('cls')
-    while True:
-        input()
-
+        aftersleep = False
+        try:
+            something = inputimeout(prompt='WASD: ', timeout=1)
+        except TimeoutOccurred:
+            pass
+        
 main()
-
-
