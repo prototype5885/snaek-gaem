@@ -5,7 +5,7 @@ import time
 #imports os to clear the terminal
 import os
 
-from inputimeout import inputimeout, TimeoutOccurred
+from pytimedinput import timedInput
 
 #bool to stop if you die
 gameOver = bool(False)
@@ -95,24 +95,31 @@ def draw():
 def logic():
     global x
     global y
+    
+    if something == "": x = x + 1
+    
     if something == "w": y = y - 1
     if something == "s": y = y + 1
     if something == "a": x = x - 1
     if something == "d": x = x + 1
+    
+
 
 
 
 def main():
     setup()
     global something
+    global x
+    global y
     while gameOver is False:
         os.system('cls')  
         draw()
         logic()
-        aftersleep = False
-        try:
-            something = inputimeout(prompt='WASD: ', timeout=1)
-        except TimeoutOccurred:
-            pass
-        
+        txt,_ = timedInput('get input:', timeout = 0.25)
+        match txt:
+            case 'w': something = "w"
+            case 's': something = "s"
+            case 'a': something = "a"
+            case 'd': something = "d"
 main()
